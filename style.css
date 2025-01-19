@@ -1,5 +1,4 @@
 :root {
-  --main-bg-color: #fff;
   --main-text-color: #888888;
 }
 [data-theme="dark"] {
@@ -22,7 +21,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  background-color: var(--main-bg-color);
+  background-color: #ffffff00;
   position: relative;
   transition: all ease 0.2s;
 }
@@ -33,11 +32,11 @@ body {
   align-items: center;
   gap: 20px;
   width: 100%;
+  border-radius: 35px;
 }
 .country {
   font-size: 1.5rem;
   color: var(--main-text-color);
-  padding: 0.5em 0;
   font-family: monospace;
   text-transform: uppercase;
   letter-spacing: 4px;
