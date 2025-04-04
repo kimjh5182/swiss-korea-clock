@@ -5,57 +5,43 @@ const hour = document.querySelector(".hour");
 const min = document.querySelector(".min");
 const sec = document.querySelector(".sec");
 
-const setKoreaClock = (clockElement) => {
+const setClock = (clockElement, timeZone, locale = "en-US") => {
   const now = new Date();
-  const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
-  const koreaTimeDiff = 9 * 60 * 60 * 1000;
-  const korNow = new Date(utc + koreaTimeDiff);
-  let day = korNow;
-  let hh = day.getHours() * 30;
-  let mm = day.getMinutes() * deg;
-  let ss = day.getSeconds() * deg;
+  const localNow = new Date(now.toLocaleString("en-US", { timeZone }));
+
+  const hh = localNow.getHours() * 30;
+  const mm = localNow.getMinutes() * deg;
+  const ss = localNow.getSeconds() * deg;
 
   clockElement.querySelector(".hour").style.transform = `rotateZ(${
     hh + mm / 12
   }deg)`;
   clockElement.querySelector(".min").style.transform = `rotateZ(${mm}deg)`;
   clockElement.querySelector(".sec").style.transform = `rotateZ(${ss}deg)`;
-  clockElement.querySelector(".time").textContent = korNow.toLocaleTimeString(
-    "en-US",
+  clockElement.querySelector(".time").textContent = localNow.toLocaleTimeString(
+    locale,
     { hour: "numeric", minute: "numeric", hour12: true }
   );
 };
 
-const setSwissClock = (clockElement) => {
-  const now = new Date();
-  const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
-  const swissTimeDiff = 1 * 60 * 60 * 1000;
-  const swissNow = new Date(utc + swissTimeDiff);
-  let hh = swissNow.getHours() * 30;
-  let mm = swissNow.getMinutes() * deg;
-  let ss = swissNow.getSeconds() * deg;
-
-  clockElement.querySelector(".hour").style.transform = `rotateZ(${hh}deg)`;
-  clockElement.querySelector(".min").style.transform = `rotateZ(${mm}deg)`;
-  clockElement.querySelector(".sec").style.transform = `rotateZ(${ss}deg)`;
-  clockElement.querySelector(".time").textContent = swissNow.toLocaleTimeString(
-    "en-US",
-    {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    }
-  );
-};
-
-document.querySelectorAll(".clock-container.korea").forEach(setKoreaClock);
+// 한국 시계 설정
+document
+  .querySelectorAll(".clock-container.korea")
+  .forEach((clock) => setClock(clock, "Asia/Seoul", "en-US"));
 setInterval(() => {
-  document.querySelectorAll(".clock-container.korea").forEach(setKoreaClock);
+  document
+    .querySelectorAll(".clock-container.korea")
+    .forEach((clock) => setClock(clock, "Asia/Seoul", "en-US"));
 }, 1000);
 
-document.querySelectorAll(".clock-container.swiss").forEach(setSwissClock);
+// 스위스 시계 설정
+document
+  .querySelectorAll(".clock-container.swiss")
+  .forEach((clock) => setClock(clock, "Europe/Zurich", "en-US"));
 setInterval(() => {
-  document.querySelectorAll(".clock-container.swiss").forEach(setSwissClock);
+  document
+    .querySelectorAll(".clock-container.swiss")
+    .forEach((clock) => setClock(clock, "Europe/Zurich", "en-US"));
 }, 1000);
 
 let currentTheme = "";
